@@ -64,4 +64,100 @@
 #include <iomanip>
 #include <string>
 using namespace std;
+#include <iostream>
+#include <iomanip>
+#include <string>
+using namespace std;
 
+const int MAX_SIZE = 10;
+
+// Function to print a matrix neatly using setw()
+void printMatrix(int matrix[MAX_SIZE][MAX_SIZE], int rows, int cols) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            cout << setw(5) << matrix[i][j];
+        }
+        cout << endl;
+    }
+}
+
+// PART A: Transpose a Matrix
+void transposeMatrix(int src[MAX_SIZE][MAX_SIZE], int dest[MAX_SIZE][MAX_SIZE], int rows, int cols) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            dest[j][i] = src[i][j];
+        }
+    }
+}
+
+// PART B: Add Two Matrices
+void addMatrices(int A[MAX_SIZE][MAX_SIZE], int B[MAX_SIZE][MAX_SIZE], int result[MAX_SIZE][MAX_SIZE], int rows, int cols) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            result[i][j] = A[i][j] + B[i][j];
+        }
+    }
+}
+
+// PART C: Multiply Two Matrices
+void multiplyMatrices(int A[MAX_SIZE][MAX_SIZE], int B[MAX_SIZE][MAX_SIZE], int result[MAX_SIZE][MAX_SIZE], int r1, int c1, int c2) {
+    for (int i = 0; i < r1; i++) {
+        for (int j = 0; j < c2; j++) {
+            result[i][j] = 0;
+            for (int k = 0; k < c1; k++) {
+                result[i][j] += A[i][k] * B[k][j];
+            }
+        }
+    }
+}
+
+int main() {
+    int rows, cols;
+    int A[MAX_SIZE][MAX_SIZE], B[MAX_SIZE][MAX_SIZE], result[MAX_SIZE][MAX_SIZE];
+
+    // Read Dimensions
+    cout << "Enter number of rows: ";
+    cin >> rows;
+    cout << "Enter number of columns: ";
+    cin >> cols;
+
+    // Input Matrix A
+    cout << "\nInput Matrix A:\n";
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            cout << "Enter element [" << i << "][" << j << "]: ";
+            cin >> A[i][j];
+        }
+    }
+
+    // Part A Output
+    cout << "\n--- Part A: Transpose ---\n";
+    cout << "Original Matrix:\n";
+    printMatrix(A, rows, cols);
+
+    transposeMatrix(A, result, rows, cols);
+    cout << "Transposed Matrix:\n";
+    printMatrix(result, cols, rows);
+
+    // Part B Input & Output
+    cout << "\n--- Part B: Addition ---\n";
+    cout << "Input Matrix B (same dimensions):\n";
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            cout << "Enter element [" << i << "][" << j << "]: ";
+            cin >> B[i][j];
+        }
+    }
+
+    addMatrices(A, B, result, rows, cols);
+    cout << "Sum Matrix (A + B):\n";
+    printMatrix(result, rows, cols);
+
+    // Part C Output (assuming square/compatible dimensions for simple test)
+    cout << "\n--- Part C: Multiplication ---\n";
+    multiplyMatrices(A, B, result, rows, cols, cols);
+    cout << "Product Matrix (A x B):\n";
+    printMatrix(result, rows, cols);
+
+    return 0;
+}
